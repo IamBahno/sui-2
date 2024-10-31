@@ -21,10 +21,10 @@ class TestDotProduct(unittest.TestCase):
         c = st.dot_product(a, b)  # 2.5
         c.backward()
 
-        e_a_grad = np.array([[1.25, 1.25, 2.5]])  # c * b
+        e_a_grad = np.array([[0.5, 0.5, 1.0]])  # c * b
         assert_allclose(a.grad, e_a_grad)
 
-        e_b_grad = np.array([[2.5, -5.0, 7.5]]).T  # c * a
+        e_b_grad = np.array([[1.0, -2.0, 3.0]]).T  # c * a
         assert_allclose(b.grad, e_b_grad)
 
     def test_matrix_vector_fwd(self):
@@ -60,7 +60,7 @@ class TestAggregation(unittest.TestCase):
         b = st.sui_sum(a)
         b.backward()
 
-        e_a_grad = np.array([[1.5, 1.5, 1.5]]).T
+        e_a_grad = np.array([[1.0, 1.0, 1.0]]).T
         assert_allclose(a.grad, e_a_grad)
 
 
@@ -159,7 +159,7 @@ class TestBackpropagation(unittest.TestCase):
         c = st.sui_sum(b)
         c.backward()
 
-        e_a_grad = np.array([[4.0, 0.0, 4.0]]).T
+        e_a_grad = np.array([[1.0, 0.0, 1.0]]).T
 
         assert_allclose(a.grad, e_a_grad)
 
@@ -171,8 +171,8 @@ class TestBackpropagation(unittest.TestCase):
         d = st.sui_sum(c)
         d.backward()
 
-        e_a_grad = np.array([[8.0, 8.0, 8.0]]).T
-        e_b_grad = np.array([[8.0, 8.0, 8.0]]).T
+        e_a_grad = np.array([[1.0, 1.0, 1.0]]).T
+        e_b_grad = np.array([[1.0, 1.0, 1.0]]).T
 
         assert_allclose(a.grad, e_a_grad)
         assert_allclose(b.grad, e_b_grad)
