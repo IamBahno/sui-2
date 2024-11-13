@@ -21,7 +21,6 @@ class Tensor:
         if deltas is not None:
             assert deltas.shape == self.value.shape, f'Expected gradient with shape {self.value.shape}, got {deltas.shape}'
 
-            # raise NotImplementedError('Backpropagation with deltas not implemented yet')
             self.grad += deltas
             
             # If a back_op exists, propagate the gradient back
@@ -36,7 +35,6 @@ class Tensor:
             if self.back_op is None:
                 raise ValueError(f'Cannot start backpropagation from a leaf!')
 
-            # raise NotImplementedError('Backpropagation without deltas not implemented yet')
             # set the initial gradient to be one (because the derivation of L with respect to L is 1)
             self.grad = np.ones((1,1))
             self.back_op.backward(self.grad)
